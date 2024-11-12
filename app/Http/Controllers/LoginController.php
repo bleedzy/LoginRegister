@@ -11,6 +11,7 @@ class LoginController extends Controller
     //
     public function index()
     {
+        session()->flush();
         return view('login');
     }
     public function log(Request $request)
