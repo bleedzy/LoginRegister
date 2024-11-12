@@ -40,13 +40,18 @@ class LoginController extends Controller
     }
     public function reg()
     {
-        DB::table('users')->insert([
-            'username' => $_POST['username'],
-            'password' => md5($_POST['password']),
-            'email' => $_POST['email'],
-            'role' => $_POST['role']
-        ]);
-        return redirect()->route('login.index');
+        $user = DB::table('users')->where('username', $_POST['username'])->first();
+        if($user == null){
+            DB::table('users')->insert([
+                'username' => $_POST['username'],
+                'password' => md5($_POST['password']),
+                'email' => $_POST['email'],
+                'role' => $_POST['role']
+            ]);
+            return redirect()->route('login.index');
+        }else{
+            echo 'Username sudah digunakan';
+        }
     }
     public function home()
     {
