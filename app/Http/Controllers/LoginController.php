@@ -11,6 +11,8 @@ class LoginController extends Controller
     //
     public function index()
     {
+        $users = DB::table('users')->get();
+        dd($users);
         session()->flush();
         return view('login');
     }
@@ -42,7 +44,7 @@ class LoginController extends Controller
     public function reg()
     {
         $user = DB::table('users')->where('username', $_POST['username'])->first();
-        if($user == null){
+        if ($user == null) {
             DB::table('users')->insert([
                 'username' => $_POST['username'],
                 'password' => md5($_POST['password']),
@@ -50,7 +52,7 @@ class LoginController extends Controller
                 'role' => $_POST['role']
             ]);
             return redirect()->route('login.index');
-        }else{
+        } else {
             echo 'Username sudah digunakan';
         }
     }
